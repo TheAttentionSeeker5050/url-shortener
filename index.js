@@ -65,6 +65,10 @@ module.exports = function main (options, cb) {
   app.use(function fourOhFourHandler (req, res, next) {
     next(httpErrors(404, `Route not found: ${req.url}`))
   })
+
+  // Use static files
+  app.use(express.static('public'))
+
   app.use(function fiveHundredHandler (err, req, res, next) {
     if (err.status >= 500) {
       logger.error(err)
