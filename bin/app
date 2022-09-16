@@ -3,5 +3,5 @@
 
 // Pass configuration to application
 require('../')({
-  port: process.env.PORT || 8000
+  port: process.env.PORT || 8080
 })
