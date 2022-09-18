@@ -1,6 +1,10 @@
 'use strict'
 
-// For hashing passwords
+// Import user controller
+const userController = require("../controllers/user.controller")
+
+// import mongoose
+const mongoose = require("mongoose")
 
 const users = [
   // This user is added to the array to avoid creating a new user on each restart
@@ -38,6 +42,15 @@ module.exports = function (app, opts) {
     res.locals.page_name = "my-urls"
     res.render('main')
   })
+
+  // app.post("/login", userController.login())
+  // app.post("/register", (req, res) => {
+  //   // we will use this function to post register
+
+  //   // get the elements from the request body
+  //   // const { firstName, lastName, email, password, passwordConfirmation } = req.body
+  //   // console.log(req.body)
+  // })
 
 }
 

@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     password: {
         type: String,
         maxLength: 120,
-        set: setPassword
+        set: hashPassword
     },
     firstName: {
         type: String,

@@ -27,13 +27,12 @@ module.exports = function main (options, cb) {
   let serverStarted = false
   let serverClosing = false
 
-
-
   // use our database
   const db = require("./config/db.config")
   console.log(db)
   db.on("error", console.error.bind(console, "mongodb connection error"))
 
+  
   // Setup error handling
   function unhandledError (err) {
     // Log the errors
@@ -44,7 +43,7 @@ module.exports = function main (options, cb) {
       return
     }
     serverClosing = true
-
+    
     // If server has started, close it down
     if (serverStarted) {
       server.close(function () {
@@ -54,10 +53,13 @@ module.exports = function main (options, cb) {
   }
   process.on('uncaughtException', unhandledError)
   process.on('unhandledRejection', unhandledError)
-
+  
   // Create the express app
   const app = express()
-
+  
+  app.use(express.json())
+  app.use(express.urlencoded({ extended: true }))
+  
   // Template engine
   app.engine('html', ejs.renderFile)
   app.set('views', path.join(__dirname, 'views'))
@@ -73,7 +75,7 @@ module.exports = function main (options, cb) {
   // Alternativly, you could setup external log handling for startup
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
-  require('./routes/routes')(app, opts)
+  require('./routes/user.routes')(app, opts)
 
   // Common error handlers
   app.use(function fourOhFourHandler (req, res, next) {
