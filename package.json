@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start-dev": "nodemon ./bin/app",
-    "test": "jest",
+    "test": "jest --runInBand ./test",
     "start": "./bin/app"
   },
   "author": "Nicolas@ <nicolas.castellano.6@gmail.com>",
@@ -18,10 +18,15 @@
     "url-shortener"
   ],
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.2",
     "ejs": "^3.1.8",
     "express": "^4.18.1",
     "http-errors": "^2.0.0",
     "mongodb": "^4.9.1",
+    "mongoose": "^6.6.1",
     "nodemon": "^2.0.19",
     "pino": "^8.5.0",
     "pino-http": "^8.2.0",
@@ -37,5 +42,4 @@
       "/node_modules/"
     ]
   }
-  
 }

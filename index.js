@@ -6,6 +6,9 @@ const ejs = require('ejs')
 const pino = require('pino')
 const pinoHttp = require('pino-http')
 
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
 module.exports = function main (options, cb) {
   // Set default options
   const ready = cb || function () {}
@@ -59,7 +62,7 @@ module.exports = function main (options, cb) {
   // Alternativly, you could setup external log handling for startup
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
-  require('./routes')(app, opts)
+  require('./routes/routes')(app, opts)
 
   // Common error handlers
   app.use(function fourOhFourHandler (req, res, next) {
