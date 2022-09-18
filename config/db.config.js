@@ -3,8 +3,6 @@ const mongoose = require('mongoose')
 
 
 
-// please delete this later
-const uri = "mongodb+srv://nickcastellano:c5!sLDa&KS3raBty@cluster0.7pylz6o.mongodb.net/?retryWrites=true&w=majority"
 
 // connect to our database
 mongoose
