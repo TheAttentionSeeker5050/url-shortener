@@ -10,6 +10,10 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
 module.exports = function main (options, cb) {
+
+  // dotenv for environment variables
+  require("dotenv").config()
+
   // Set default options
   const ready = cb || function () {}
   const opts = Object.assign({
@@ -22,6 +26,13 @@ module.exports = function main (options, cb) {
   let server
   let serverStarted = false
   let serverClosing = false
+
+
+
+  // use our database
+  const db = require("./config/db.config")
+  console.log(db)
+  db.on("error", console.error.bind(console, "mongodb connection error"))
 
   // Setup error handling
   function unhandledError (err) {

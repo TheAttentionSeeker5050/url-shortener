@@ -1,6 +1,13 @@
 
 // User model. Our users will be able to use our application. User model store their information
-const mongoose = require('../config/db.config')
+const mongoose = require('mongoose')
+const bcrypt = require("bcrypt")
+
+function hashPassword(value) {
+    return bcrypt.hashSync(value, 10)
+}
+
+
 const Schema = mongoose.Schema
 
 const UserSchema = new Schema({
@@ -12,7 +19,8 @@ const UserSchema = new Schema({
     },
     password: {
         type: String,
-        maxLength: 120
+        maxLength: 120,
+        set: setPassword
     },
     firstName: {
         type: String,
