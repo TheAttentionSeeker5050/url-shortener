@@ -62,7 +62,7 @@ module.exports = function main (options, cb) {
 
   // use express session to store user sessions and retrieve them
   app.use(session({
-    secret: "this should not go in here, we should use environment variables instead",
+    secret: process.env.SESSION_SECRET_TOKEN,
     resave: false,
     saveUninitialized: false
   }))
