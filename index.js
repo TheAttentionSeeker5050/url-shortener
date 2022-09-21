@@ -9,6 +9,8 @@ const pinoHttp = require('pino-http')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+const session = require('express-session')
+
 module.exports = function main (options, cb) {
 
   // dotenv for environment variables
@@ -51,6 +53,7 @@ module.exports = function main (options, cb) {
       })
     }
   }
+
   process.on('uncaughtException', unhandledError)
   process.on('unhandledRejection', unhandledError)
   
@@ -66,7 +69,7 @@ module.exports = function main (options, cb) {
   app.set('view engine', 'html')
   
   // Common middleware
-  // app.use(/* ... */)
+  // I sometimes comment the line below to not have logs in the console
   app.use(pinoHttp({ logger }))
       
   // Register routes
