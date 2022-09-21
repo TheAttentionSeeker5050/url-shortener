@@ -59,6 +59,13 @@ module.exports = function main (options, cb) {
   
   // Create the express app
   const app = express()
+
+  // use express session to store user sessions and retrieve them
+  app.use(session({
+    secret: "this should not go in here, we should use environment variables instead",
+    resave: false,
+    saveUninitialized: false
+  }))
   
   app.use(express.json())
   app.use(express.urlencoded({ extended: true }))

@@ -16,7 +16,19 @@ const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 
 
+// import middleware
+const isAuth = require("../middleware/isAuth.middleware.js").isAuth
 
+console.log(typeof(isAuth))
+
+// function isAuth (req, res, next) {
+//   // this moddleware function performs check to validate that the user has logged in
+//   if (req.session.isAuth) {
+//       next()
+//   } else {
+//       res.redirect("/login")
+//   }
+// }
 
 module.exports = function (app, opts) {
   // Setup routes, middleware, and handlers
@@ -41,7 +53,7 @@ module.exports = function (app, opts) {
     res.render('main')
   })
 
-  app.get('/my-urls', (req, res) => {
+  app.get('/my-urls', isAuth, (req, res, next) => {
     //  all my saved urls page
     res.locals.page_name = "my-urls"
     res.render('main')
@@ -96,6 +108,8 @@ module.exports = function (app, opts) {
   app.post("/login", async (req, res) => {
     // to login 
 
+    // this is only for ilustration purposes, I should delete this later
+    console.log(req.session)
     // save the form information
     const formData = { 
       emailAddress: req.body.emailAddress, 
@@ -110,6 +124,8 @@ module.exports = function (app, opts) {
       res.status(401).send("User was not found")
     }
 
+    // console.log(user)
+
     // if the password matches the one on the database
     if (bcrypt.compareSync(formData.password, user.password)) {
 
@@ -118,12 +134,22 @@ module.exports = function (app, opts) {
         expiresIn: "24h"
       })
 
+      // console.log(token)
+
+      
+
       // send token to the client web browser
-      res.json({
-        user: user.emailAddress,
-        accessToken: token, 
-        message: "User logged in"
-      })
+      // res.json({
+      //   user: user.emailAddress,
+      //   accessToken: token, 
+      //   message: "User logged in"
+      // })
+
+      // what we do if the request is correct
+      req.session.isAuth = await true
+      req.session.accessToken = await token
+
+      await res.redirect("/my-urls")
 
       
 
