@@ -4,9 +4,9 @@
   "description": "A basic url shortener website",
   "main": "index.js",
   "scripts": {
+    "start": "./bin/app",
     "start-dev": "nodemon ./bin/app",
-    "test": "jest --runInBand ./test",
-    "start": "./bin/app"
+    "test": "jest --runInBand ./test"
   },
   "author": "Nicolas@ <nicolas.castellano.6@gmail.com>",
   "license": "ISC",

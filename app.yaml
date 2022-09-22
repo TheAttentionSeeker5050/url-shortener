@@ -1,0 +1,9 @@
+runtime: nodejs16
+env_variables:
+  MONGODB_URL: "mongodb+srv://nickcastellano:c5!sLDa&KS3raBty@cluster0.7pylz6o.mongodb.net/?retryWrites=true&w=majority"
+  JSON_WEB_TOKEN: "kiXSEOa?LlO1AthCSTKWaADrBJ-G7klaIA6J7OEvDFZYjo4?46mOp1ekHU2yig79kUPk7Q82hcCzf?10FxPPG6rsu9/t-?p0o878P06uk0eglTYmFAGDUJLwkZz1!Nj64lPeBqL-XWL1eVb7zCx9tn-rD5NS7mVliwih1CPl6X03os=3HcYFsyJ9wNp=VUUDXr5npnWBsnXw=uQ?P!iYa?Yg/AeeWL44yW-7mH5n5AX0b=9oD=Y3QBxubaAbODrB"
+  SESSION_SECRET_TOKEN: "this should not go in here, we should use environment variables instead"
+
+handlers:
+  - url: /public
+    static_dir: public

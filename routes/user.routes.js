@@ -19,20 +19,19 @@ const bcrypt = require("bcrypt")
 // import middleware
 const isAuth = require("../middleware/isAuth.middleware.js").isAuth
 
+// import validator
+const { check, validationResult } = require("express-validator")
+
 console.log(typeof(isAuth))
 
-// function isAuth (req, res, next) {
-//   // this moddleware function performs check to validate that the user has logged in
-//   if (req.session.isAuth) {
-//       next()
-//   } else {
-//       res.redirect("/login")
-//   }
-// }
+
 
 module.exports = function (app, opts) {
   // Setup routes, middleware, and handlers
   app.get('/', (req, res) => {
+
+    console.log(" user element: ", req.session)
+
     // home page
     res.locals.name = 'url-shortener'
     res.locals.page_name = "home"
@@ -148,6 +147,7 @@ module.exports = function (app, opts) {
       // what we do if the request is correct
       req.session.isAuth = await true
       req.session.accessToken = await token
+      
 
       await res.redirect("/my-urls")
 
