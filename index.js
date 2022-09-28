@@ -77,7 +77,7 @@ module.exports = function main (options, cb) {
   
   // Common middleware
   // I sometimes comment the line below to not have logs in the console
-  app.use(pinoHttp({ logger }))
+  // app.use(pinoHttp({ logger }))
       
   // Register routes
   // @NOTE: require here because this ensures that even syntax errors

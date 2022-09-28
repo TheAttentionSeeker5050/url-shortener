@@ -15,11 +15,14 @@ const jwt = require("jsonwebtoken")
 // import our encryption library
 const bcrypt = require("bcrypt")
 
+
 // import middleware
 const isAuth = require("../middleware/isAuth.middleware.js").isAuth
 
 // import validator
 const { check, validationResult } = require("express-validator")
+
+console.log(typeof(isAuth))
 
 
 
@@ -52,6 +55,7 @@ module.exports = function (app, opts) {
   app.get('/my-urls', isAuth, (req, res, next) => {
     //  all my saved urls page
     res.locals.page_name = "my-urls"
+    console.log(req.session)
     res.render('main')
   })
 
@@ -132,9 +136,7 @@ module.exports = function (app, opts) {
 
       // console.log(token)
 
-      console.log(queryData); // { from: '2017-01-12' }
-      console.log(bodyData);  // { to: '2017-31-12' }
-      console.log(allData);   // { from: '2017-01-12', to: '2017-31-12' }
+      
 
       // send token to the client web browser
       // res.json({
