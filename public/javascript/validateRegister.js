@@ -65,7 +65,14 @@ form.addEventListener("submit", async e => {
 
     // print all the errors in the alert screen
     if (messages.length>0) {
+
+        // first we clear previous forms
         formValidationAlert.innerHTML = ""
+
+        // now we make the error alert box visible
+        formValidationAlert.classList.add("error")
+
+        // create an unordered list element
         let ulNode = document.createElement("ul")
 
         // returns each error message
@@ -76,7 +83,16 @@ form.addEventListener("submit", async e => {
         })
 
         formValidationAlert.appendChild(ulNode)
+
+        // erase password value
+        password.value = ''
+        passwordConfirmation.value = ''
+
     } else {
+
+        // we remove the error alert, we will not notice but is ok
+        formValidationAlert.classList.remove("error")
+
         // now we process the order
         await fetch("/register", {method: "POST",
         headers: {

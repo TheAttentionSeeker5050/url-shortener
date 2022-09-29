@@ -1,0 +1,7 @@
+#formValidationAlert {
+    visibility: hidden;
+}
+
+#formValidationAlert.error {
+    visibility: visible;
+}
