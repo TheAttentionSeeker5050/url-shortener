@@ -105,6 +105,26 @@ module.exports = function (app, opts) {
     }
   })
 
+  app.post("/check-user", async (req, res) => {
+    // const usernameToCheck = req.body.emailAddress
+    // console.log(usernameToCheck)
+
+    const retrievedUsername = await User.findOne({emailAddress: req.body.email})
+    console.log(req.body.email)
+
+    console.log(retrievedUsername)
+
+    if (!retrievedUsername) {
+      // when the user does not exist and is available to be taken
+      res.json({userIsAvailable: true})
+  
+    } else {
+      // when the user is already in use and is not available
+      res.json({userIsAvailable: false})
+
+    }
+  })
+
   app.post("/login", async (req, res) => {
     // to login 
 
@@ -117,7 +137,7 @@ module.exports = function (app, opts) {
     }
 
     // search the user in our database
-    const user = await User.findOne({emailAddress: formData.emailAddress})
+    const user = await User.findOne({emailAddress: formData.email})
 
     // in case the user does not exist
     if (!user) {

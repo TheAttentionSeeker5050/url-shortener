@@ -2,11 +2,14 @@
 
 <h1>URL Shortener - Register</h1>
 
-<% if (alert != ""){ %>
-    A message should go here
-<% }  %>
 
-<form class="flex-md-wrap" method="post" action="#">
+<div class="alert alert-danger" id="formValidationAlert" role="alert">
+    <ul></ul>
+</div>
+
+<script defer src="javascript/validateRegister.js"></script>
+
+<form class="flex-md-wrap" id="registerForm" method="post" action="#">
     <div class="row">
         <div class="input-group mb-3 col">
             <span class="input-group-text" >Enter your first name</span>

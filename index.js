@@ -78,7 +78,12 @@ module.exports = function main (options, cb) {
   // Common middleware
   // I sometimes comment the line below to not have logs in the console
   // app.use(pinoHttp({ logger }))
-      
+  
+  // Use static files
+  app.use('/javascript', express.static('public/javascript'))
+  app.use('/css', express.static('public/css'))
+  app.use('/imgs', express.static('public/imgs'))
+  
   // Register routes
   // @NOTE: require here because this ensures that even syntax errors
   // or other startup related errors are caught logged and debuggable.
@@ -86,15 +91,13 @@ module.exports = function main (options, cb) {
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
   require('./routes/user.routes')(app, opts)
-
+  
   // Common error handlers
   app.use(function fourOhFourHandler (req, res, next) {
     next(httpErrors(404, `Route not found: ${req.url}`))
   })
-
-  // Use static files
-  app.use(express.static('public'))
-
+  
+  
   app.use(function fiveHundredHandler (err, req, res, next) {
     if (err.status >= 500) {
       logger.error(err)
