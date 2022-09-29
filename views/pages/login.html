@@ -1,6 +1,18 @@
 <h1>URL Shortener - Login</h1>
 
-<form method="post" >
+<div class="alert alert-danger" id="formValidationAlert" role="alert">
+
+    <% if (alert != "") { %>
+        <%= alert %>
+        
+    <% } %>
+
+</div>
+
+<script defer src="javascript/validateLogin.js"></script>
+
+
+<form method="post" id="loginForm" >
     
     <div class="input-group mb-3 rounded">
         <span class="input-group-text" >Enter your email address</span>

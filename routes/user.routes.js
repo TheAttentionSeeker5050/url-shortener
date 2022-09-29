@@ -22,7 +22,6 @@ const isAuth = require("../middleware/isAuth.middleware.js").isAuth
 // import validator
 const { check, validationResult } = require("express-validator")
 
-console.log(typeof(isAuth))
 
 
 
@@ -30,7 +29,6 @@ module.exports = function (app, opts) {
   // Setup routes, middleware, and handlers
   app.get('/', (req, res) => {
 
-    console.log(" user element: ", req.session)
 
     // home page
     res.locals.name = 'url-shortener'
@@ -41,8 +39,17 @@ module.exports = function (app, opts) {
   app.get('/login', (req, res) => {
     // login form page
     res.locals.page_name = "login"
-    res.locals.alert = ""
-    res.render('main')
+
+
+    if (req.query["error"]=="usernotfound") {
+      res.locals.alert = "Username not found"
+    } else if (req.query["error"] == "credsinvalid") {
+      res.locals.alert = "Your username or password are invalid"
+    } else {
+      res.locals.alert = ""
+    }
+    
+    res.render('main', {alert: res.locals.alert})
   })
 
   app.get('/register', (req, res) => {
@@ -55,7 +62,6 @@ module.exports = function (app, opts) {
   app.get('/my-urls', isAuth, (req, res, next) => {
     //  all my saved urls page
     res.locals.page_name = "my-urls"
-    console.log(req.session)
     res.render('main')
   })
 
@@ -106,13 +112,10 @@ module.exports = function (app, opts) {
   })
 
   app.post("/check-user", async (req, res) => {
-    // const usernameToCheck = req.body.emailAddress
-    // console.log(usernameToCheck)
+    // check if the user exist so we dont make duplicates
 
     const retrievedUsername = await User.findOne({emailAddress: req.body.email})
-    console.log(req.body.email)
 
-    console.log(retrievedUsername)
 
     if (!retrievedUsername) {
       // when the user does not exist and is available to be taken
@@ -128,8 +131,6 @@ module.exports = function (app, opts) {
   app.post("/login", async (req, res) => {
     // to login 
 
-    // this is only for ilustration purposes, I should delete this later
-    console.log(req.session)
     // save the form information
     const formData = { 
       emailAddress: req.body.emailAddress, 
@@ -137,14 +138,17 @@ module.exports = function (app, opts) {
     }
 
     // search the user in our database
-    const user = await User.findOne({emailAddress: formData.email})
+    const user = await User.findOne({emailAddress: formData.emailAddress})
 
     // in case the user does not exist
     if (!user) {
-      res.status(401).send("User was not found")
+      // res.status(401).send("User was not found")
+      res.status(401).redirect("/login?error=usernotfound")
+
     }
 
-    // console.log(user)
+
+
 
     // if the password matches the one on the database
     if (bcrypt.compareSync(formData.password, user.password)) {
@@ -154,22 +158,13 @@ module.exports = function (app, opts) {
         expiresIn: "24h"
       })
 
-      // console.log(token)
-
       
-
-      // send token to the client web browser
-      // res.json({
-      //   user: user.emailAddress,
-      //   accessToken: token, 
-      //   message: "User logged in"
-      // })
-
       // what we do if the request is correct
       req.session.isAuth = await true
       req.session.accessToken = await token
-      
+      req.session.userID = await user._id
 
+      
       await res.redirect("/my-urls")
 
       
@@ -177,9 +172,7 @@ module.exports = function (app, opts) {
     } else {
 
       // in case that the passwords don't match
-      res.status(401).json({
-        message: "Could not authenticate"
-      })
+      res.status(401).redirect("/login?error=credsinvalid")
     }
 
   })
