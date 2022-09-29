@@ -1,6 +1,7 @@
 
 
 
+
 // we get the for element variables
 const firstName = document.getElementById("firstName")
 const lastName = document.getElementById("lastName")
@@ -21,6 +22,10 @@ var emailRegex = new RegExp("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$")
 
 form.addEventListener("submit", async e => {
     // validation on the frontend. 
+
+    // first we prevent the default form post request
+    e.preventDefault()
+
     // first we create an array called messages, and add all the alert warnings on it
     const messages = []
     if (firstName.value === "" || firstName.value == null) {
@@ -49,23 +54,17 @@ form.addEventListener("submit", async e => {
         messages.push("Invalid email")
     }
 
-    // test email is not taken
-    await fetch("/check-user", {method: "POST",
-    headers: {
-        'Content-Type': 'application/json',
-      }, 
-      body: JSON.stringify({email: emailAddress.value})})
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data.userIsAvailable)
-            if (data.userIsAvailable === false) {
-                messages.push("Email is already taken")
-            }
-        })
+
+
+    // test that the email is not already taken
+    await emailIsAvailable(emailAddress.value).then(data => {
+        if (data === false) {
+            messages.push("That email is already taken")
+        }
+    })
 
     // print all the errors in the alert screen
     if (messages.length>0) {
-        e.preventDefault()
         formValidationAlert.innerHTML = ""
         let ulNode = document.createElement("ul")
 
@@ -77,20 +76,47 @@ form.addEventListener("submit", async e => {
         })
 
         formValidationAlert.appendChild(ulNode)
+    } else {
+        // now we process the order
+        await fetch("/register", {method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+          }, 
+          body: JSON.stringify({
+            firstName: firstName.value,
+            lastName: lastName.value,
+            emailAddress: emailAddress.value,
+            password: password.value,
+            passwordConfirmation: passwordConfirmation.value
+          })})
+
+          
+          
+        window.location.href = "/login"
     }
+    
+    
 
 
 
 })
 
 // // this is a function that will validate if the email is already taken
-// function emailIsAvailable(emailInput) {
+const emailIsAvailable = async (emailInput) => {
+    var result 
+    await fetch("/check-user", {method: "POST",
+    headers: {
+        'Content-Type': 'application/json',
+      }, 
+      body: JSON.stringify({email: emailInput})})
+      .then(response => response.json())
+      .then(data => {
+          //   if false, then the email is not available, if true email is available for account creation
+        result = data.userIsAvailable
+      })
+
+    //   return a bool containing an availability result
+      return result
+        
     
-//     fetch("/check-user", {method: "post", body: JSON.stringify({emailAddress: emailInput})})
-//         .then(response => response.json())
-//         .then((data) => {
-//             console.log(data.userIsAvailable)
-//             return true
-//         })
-    
-// }
+}
