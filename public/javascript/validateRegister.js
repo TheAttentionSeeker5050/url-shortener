@@ -43,7 +43,7 @@ form.addEventListener("submit", async e => {
     // test for valid password
     if (!strongPasswordRegex.test(password.value)) {
         messages.push("Please use a stronger password (at least 1 letter, 1 digit, 1 special character and with size of 8 characters or more)")
-    // }
+    }
 
     if (password.value != passwordConfirmation.value) {
         messages.push("Password and password confirmation dont match. ")
