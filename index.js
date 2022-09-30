@@ -9,7 +9,9 @@ const pinoHttp = require('pino-http')
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+// the session variables
 const session = require('express-session')
+const MongoStore = require('connect-mongo')
 
 module.exports = function main (options, cb) {
 
@@ -31,7 +33,6 @@ module.exports = function main (options, cb) {
 
   // use our database
   const db = require("./config/db.config")
-  console.log(db)
   db.on("error", console.error.bind(console, "mongodb connection error"))
 
   
@@ -60,14 +61,14 @@ module.exports = function main (options, cb) {
   // Create the express app
   const app = express()
 
-  // use cookie parser to pass cookies to the frontend client
-  app.use(cookieParser())
+
 
   // use express session to store user sessions and retrieve them
   app.use(session({
     secret: process.env.SESSION_SECRET_TOKEN,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    store: MongoStore.create({mongoUrl: process.env.MONGODB_URL})
   }))
   
   app.use(express.json())

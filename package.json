@@ -20,6 +20,7 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.2",
     "ejs": "^3.1.8",
@@ -33,7 +34,8 @@
     "nodemon": "^2.0.19",
     "pino": "^8.5.0",
     "pino-http": "^8.2.0",
-    "pino-pretty": "^9.1.0"
+    "pino-pretty": "^9.1.0",
+    "random-string": "^0.2.0"
   },
   "devDependencies": {
     "jest": "^29.0.3",

@@ -1,9 +1,9 @@
 <h1>URL Shortener</h1>
 
-<form >
+<form method="post" action="/new-url">
     <div class="mb-3 d-sm-flex flex-column">
         <label for="inputURL" class="form-label">Enter the URL you want to shorten</label>
-        <input type="text" class="form-control" id="inputURL">
+        <input type="text" class="form-control" id="inputURL" name="inputURL">
       </div>
     <button type="submit" class="btn btn-primary">Shorten this URL</button>
 </form>

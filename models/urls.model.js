@@ -10,13 +10,19 @@ const UrlSchema = new Schema({
     urlOwner: {
         type: String
     },
-    url: {
+    originalUrl: {
+        type: String
+    },
+    shortUrl: {
         type: String
     },
     timeCreated: {
         type: String
     },
     dateCreated: {
+        type: String
+    },
+    expiryDate: {
         type: String
     }
 })
