@@ -1,0 +1,19 @@
+.hideWhenAuth {
+    display:inherit;
+
+}
+
+.hideWhenAuth.hidden {
+    display:none;
+
+}
+
+.displayWhenAuth {
+    display:inherit;
+
+}
+
+.displayWhenAuth.hidden {
+    display:none;
+    
+}

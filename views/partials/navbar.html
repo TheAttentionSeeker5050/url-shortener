@@ -1,6 +1,7 @@
+
 <header>
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
           <a class="navbar-brand" href="#">URL SHORTENER</a>
           <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -10,11 +11,14 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/login">Log In</a>
+              <li class="nav-item hideWhenAuth" id="loginElement">
+                <a class="nav-link hideWhenAuth"  href="/login">Log In</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/register">Register</a>
+              <li class="nav-item hideWhenAuth" id="registerElement">
+                <a class="nav-link"  href="/register">Register</a>
+              </li>
+              <li class="nav-item displayWhenAuth">
+                <a class="nav-link" id="logoutElement" href="/">Logout</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="my-urls">My URLs</a>
@@ -24,3 +28,8 @@
         </div>
       </nav>
 </header>
+<% if (isAuth == true) { %>
+  <script src="javascript/navbarHideWhenAuth.js"></script>
+<% } else { %>
+
+<% } %>

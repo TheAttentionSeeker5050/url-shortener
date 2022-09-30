@@ -60,6 +60,9 @@ module.exports = function main (options, cb) {
   // Create the express app
   const app = express()
 
+  // use cookie parser to pass cookies to the frontend client
+  app.use(cookieParser())
+
   // use express session to store user sessions and retrieve them
   app.use(session({
     secret: process.env.SESSION_SECRET_TOKEN,
@@ -91,6 +94,8 @@ module.exports = function main (options, cb) {
   // errors and handle them outside the node process.  I find this is
   // better because it works out of the box even in local development.
   require('./routes/user.routes')(app, opts)
+  require('./routes/urlShortener.routes')(app, opts)
+
   
   // Common error handlers
   app.use(function fourOhFourHandler (req, res, next) {

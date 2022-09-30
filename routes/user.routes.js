@@ -27,18 +27,14 @@ const { check, validationResult } = require("express-validator")
 
 module.exports = function (app, opts) {
   // Setup routes, middleware, and handlers
-  app.get('/', (req, res) => {
-
-
-    // home page
-    res.locals.name = 'url-shortener'
-    res.locals.page_name = "home"
-    res.render('main')
-  })
+  
 
   app.get('/login', (req, res) => {
     // login form page
     res.locals.page_name = "login"
+
+    // check cookies
+    res.locals.isAuth = req.session.isAuth
 
 
     if (req.query["error"]=="usernotfound") {
@@ -54,19 +50,21 @@ module.exports = function (app, opts) {
 
   app.get('/register', (req, res) => {
     // register form page
+
+    // check cookies
+    res.locals.isAuth = req.session.isAuth
+
     res.locals.page_name = "register"
     res.locals.alert = ""
     res.render('main')
   })
 
-  app.get('/my-urls', isAuth, (req, res, next) => {
-    //  all my saved urls page
-    res.locals.page_name = "my-urls"
-    res.render('main')
-  })
+  
 
   app.post("/register", async (req, res) => {
     // to register a new user
+
+
 
     // save the form information
     const formData = { 
@@ -114,6 +112,7 @@ module.exports = function (app, opts) {
   app.post("/check-user", async (req, res) => {
     // check if the user exist so we dont make duplicates
 
+
     const retrievedUsername = await User.findOne({emailAddress: req.body.email})
 
 
@@ -130,6 +129,7 @@ module.exports = function (app, opts) {
 
   app.post("/login", async (req, res) => {
     // to login 
+
 
     // save the form information
     const formData = { 
