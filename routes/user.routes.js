@@ -177,5 +177,17 @@ module.exports = function (app, opts) {
 
   })
 
+  app.get("/logout", (req, res) => {
+    if (req.session) {
+      delete req.session.isAuth
+      delete req.session.accessToken
+      delete req.session.userID
+
+    }
+    
+
+    res.redirect("/login")
+  })
+
 }
 

@@ -16,14 +16,11 @@ const UrlSchema = new Schema({
     shortUrl: {
         type: String
     },
-    timeCreated: {
-        type: String
-    },
     dateCreated: {
-        type: String
+        type: Date
     },
     expiryDate: {
-        type: String
+        type: Date
     }
 })
 

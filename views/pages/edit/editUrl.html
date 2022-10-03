@@ -1,0 +1,32 @@
+<h2>Edit an url</h2>
+
+<div class="alert alert-danger" id="formValidationAlert" role="alert">
+
+    <% if (alert != "") { %>
+        <%= alert %>
+        
+    <% } %>
+
+</div>
+
+<script defer src="/javascript/validateEditUrl.js"></script>
+
+<form method="post" id="editUrlForm" >
+
+    <br>
+    <div class="mb-3">
+        <label for="originalUrl" class="form-label">Enter your new long url for <strong><%-urlId%></strong></label>
+        <input type="text" class="form-control" name="originalUrl" id="originalUrl" aria-describedby="originalUrl" value="<%-urlData.originalUrl%>">
+      </div>
+      
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" name="ROCheck" id="ROCheck">
+        <label class="form-check-label" for="ROCheck">Do you want to roll over the expiry date for 1 more month?</label>
+      </div>
+
+    <p>
+        <input type="submit" class="btn btn-primary"  value="Submit">
+        <a class="btn btn-danger" href="/my-urls">Cancel</a>
+    </p>
+
+</form>

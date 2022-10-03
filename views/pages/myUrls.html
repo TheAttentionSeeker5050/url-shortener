@@ -1,1 +1,34 @@
 <h1>URL Shortener - My urls</h1>
+
+<link rel="stylesheet" href="/css/myProfile.css">
+<script src="/javascript/myUrlsTableMethods.js"></script>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">URL</th>
+        <th scope="col">Short URL Id</th>
+        <th scope="col">Created at</th>
+        <th scope="col">Expires at</th>
+      </tr>
+    </thead>
+    <tbody>
+        <% urlsData.forEach(function(url){ %>
+
+            <tr>
+                <th scope="row">
+                    <%= url.originalUrl %> 
+                    <a  href="/urls/update/<%-url.shortUrl%>" class="editUrlButton" ><img src="https://img.icons8.com/ios-glyphs/18/000000/edit--v1.png"/></a>
+                    <a href="/urls/delete/<%-url.shortUrl%>" class="deleteUrlButton" ><img src="https://img.icons8.com/small/18/000000/filled-trash.png"/></a>
+                </th>
+                
+                <td> 
+                    <a href="<%-url.originalUrl%>" class="shortUrl"><strong> <%= url.shortUrl %> </strong></a>
+                </td>
+                <td><%= url.dateCreated.toDateString() %></td>
+                <td><%= url.expiryDate.toDateString() %></td>
+            </tr>
+
+        <% }); %>
+
+    </tbody>
+</table>

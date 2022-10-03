@@ -18,10 +18,10 @@
                 <a class="nav-link"  href="/register">Register</a>
               </li>
               <li class="nav-item displayWhenAuth" id="logoutElement">
-                <a class="nav-link"  href="/">Logout</a>
+                <a class="nav-link" href="/logout">Logout</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="my-urls">My URLs</a>
+                <a class="nav-link" href="/my-urls">My URLs</a>
               </li>
             </ul>
           </div>
@@ -29,8 +29,8 @@
       </nav>
 </header>
 <% if (isAuth == true) { %>
-  <script src="javascript/navbarHideWhenAuth.js"></script>
+  <script src="/javascript/navbarHideWhenAuth.js"></script>
 <% } else { %>
-  <script src="javascript/navbarDisplayWhenAuth.js"></script>
+  <script src="/javascript/navbarDisplayWhenAuth.js"></script>
 
 <% } %>

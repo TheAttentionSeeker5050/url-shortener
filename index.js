@@ -96,6 +96,8 @@ module.exports = function main (options, cb) {
   // better because it works out of the box even in local development.
   require('./routes/user.routes')(app, opts)
   require('./routes/urlShortener.routes')(app, opts)
+  require('./routes/editUrls.routes')(app, opts)
+
 
   
   // Common error handlers

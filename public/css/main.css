@@ -1,0 +1,6 @@
+/*  this is the main css styles not included in bootstrap */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@100&display=swap');
+
+* {
+    font-family: "Roboto", "Open Sans", sans-serif;
+}

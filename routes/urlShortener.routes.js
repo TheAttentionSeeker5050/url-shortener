@@ -23,6 +23,7 @@ module.exports = function (app, opts) {
 
     // check cookies
     res.locals.isAuth = req.session.isAuth
+    // console.log(req.session)
 
     // home page
     res.locals.name = 'url-shortener'
@@ -43,7 +44,9 @@ module.exports = function (app, opts) {
     var urlToShorten = req.body.inputURL
     const userID = req.session.userID
     const shortURL = makeShortURL()
-
+    const currentDate = new Date()
+    const expiresAt = new Date()
+    const numDays = 30
 
     // this will be changed  it is just for ilustration purposes
     if (urlToShorten == "" || urlToShorten == null) {
@@ -72,7 +75,7 @@ module.exports = function (app, opts) {
                     originalUrl: urlToShorten,
                     shortUrl: shortURL,
                     dateCreated: new Date(),
-                    expiryDate: new Date().getDate()+30
+                    expiryDate: expiresAt.setDate(currentDate.getDate()+30)
                 }, (err, doc) => {
 
                     // handling errors
@@ -85,7 +88,7 @@ module.exports = function (app, opts) {
                     
                 })
 
-                console.log(shortURL)
+                // console.log(shortURL)
                 
                 break
             } else {
@@ -107,9 +110,6 @@ module.exports = function (app, opts) {
 
     // const longURL = getURLFromDB.originalUrl
 
-    // console.log("Long url: ",longURL)
-    // console.log("Query response: ",getURLFromDB)
-    // res.status(200).send(`This is an address for short url:${urlIdentifier}`)
 
     if (getURLFromDB) {
         // if we could find this short url in our db
@@ -121,13 +121,22 @@ module.exports = function (app, opts) {
   })
   
 
-  app.get('/my-urls', isAuth, (req, res, next) => {
+  app.get('/my-urls', isAuth, async (req, res, next) => {
     //  all my saved urls page
 
     // check cookies
     res.locals.isAuth = req.session.isAuth
 
+    // get user ID
+    const ownerID = req.session.userID
+
     res.locals.page_name = "my-urls"
+
+    res.locals.urlsData = await Urls.find({urlOwner: ownerID})
+
+    // console.log("URL list: \n",res.locals.urlsData)
+    
+
     res.render('main')
   })
 
